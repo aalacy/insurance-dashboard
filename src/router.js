@@ -43,10 +43,21 @@ export default new Router({
           path: '',
           component: () => import('@/views/dashboard/Dashboard'),
         },
+      ],
+    },
+    {
+      path: '/quote',
+      component: () => import('@/views/quotes/Index'),
+      children: [
         {
           name: 'TellusAbout',
-          path: 'tellusabout',
-          component: () => import('@/views/steps/TellusAbout'),
+          path: '',
+          component: () => import('@/views/quotes/steps/TellusAbout'),
+        },
+        {
+          name: 'CompareAutoInsurance',
+          path: 'compare-auto-insurance',
+          component: () => import('@/views/quotes/steps/CompareAutoInsurance'),
         },
       ],
     },

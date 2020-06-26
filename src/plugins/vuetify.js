@@ -10,6 +10,7 @@ const theme = {
   secondary: '#9C27b0',
   accent: '#9C27b0',
   info: '#00CAE3',
+  main: '#E91E63',
 }
 
 export default new Vuetify({

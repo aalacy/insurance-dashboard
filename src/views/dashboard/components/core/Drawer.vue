@@ -93,6 +93,11 @@
           title: 'dashboard',
           to: '/',
         },
+        {
+          icon: 'mdi-view-dashboard',
+          title: 'dashboard',
+          to: '/quote',
+        },
       ],
     }),
 
