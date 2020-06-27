@@ -34,6 +34,7 @@
       class="ml-2"
       min-width="0"
       text
+      to="/"
     >
       <v-icon>mdi-view-dashboard</v-icon>
     </v-btn>

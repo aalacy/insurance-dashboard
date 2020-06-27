@@ -5,8 +5,10 @@
 	      ...$attrs,
 	      ...$props,
 	    }"
+	    v-model="content"
         hide-details="auto"
         outlined
+        @input="updateData"
   	>
   	</v-text-field>
 </template>
@@ -15,5 +17,19 @@
 /* eslint-disable */
 export default {
 	name: 'QuoteTextField',
+
+	props: ['value'],
+
+	data () {
+	    return {
+	      content: this.value
+	    }
+  	},
+
+	methods: {
+		updateData() {
+			this.$emit('input', this.content)
+		}
+	}
 }
 </script>

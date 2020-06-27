@@ -32,7 +32,7 @@
                 hide-details="auto"
                 placeholder="First and Last Name"
                 outlined
-                :rules="[rules.required]"
+                :rules="[rules.required, rules.name]"
               >
               </v-text-field>
             </v-col>
@@ -40,6 +40,7 @@
               <v-btn
                 large
                 block
+                :loading="loading"
                 color="success"
                 @click="getStarted"
               >
@@ -59,6 +60,10 @@
 
 <script>
 /* eslint-disable */
+  import {
+    mapState,
+  } from 'vuex'
+
   export default {
     name: 'AutoQuote',
 
@@ -75,23 +80,29 @@
           required: value => {
             return !!value || 'This field is required.'
           },
-          email: value => {
-            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            return pattern.test(value) || 'Invalid e-mail.'
+          name: value => {
+            return value.split(' ').length >= 2 || 'Invalid name.'
           },
         }
       }
     },
 
     computed: {
+      ...mapState(['loading', 'error', 'quote'])
+    },
+
+    mounted () {
+      this.$store.commit('SET_UUID', '')
     },
 
     methods: {
       async getStarted () {
         this.$refs.form.validate()
-          if (!this.valid) {
-            return
-          }
+        if (!this.valid) {
+          return
+        }
+        this.$store.commit('SET_NAME', this.name)
+        this.$router.push({ name: 'TellusAbout' })
       }
     },
   }

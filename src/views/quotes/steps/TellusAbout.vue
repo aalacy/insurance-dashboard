@@ -11,7 +11,7 @@
       <v-row>
         <v-col>
           <base-quote-text-field
-            v-model="form.firstName"
+            v-model="formData.first_name"
             label="First Name"
             placeholder="John"
             :rules="[rules.required]"
@@ -19,7 +19,7 @@
         </v-col>
         <v-col>
           <base-quote-text-field
-            v-model="form.lastName"
+            v-model="formData.last_name"
             label="Last Name"
             placeholder="Doe"
             :rules="[rules.required]"
@@ -29,7 +29,7 @@
       <v-row>
         <v-col>
           <base-quote-text-field
-            v-model="form.phoneNumber"
+            v-model="formData.phone"
             type="number"
             label="Phone Number"
             placeholder="(555)555-5555"
@@ -38,7 +38,7 @@
         </v-col>
         <v-col>
           <base-quote-text-field
-            v-model="form.email"
+            v-model="formData.email"
             label="Email Address"
             type="email"
             placeholder="jone"
@@ -50,7 +50,7 @@
       <v-row>
         <v-col>
           <base-quote-text-field
-            v-model="form.dob"
+            v-model="formData.dob"
             label="Date of Birthday"
             placeholder="MM/DD/YYYY"
             :rules="[rules.required]"
@@ -75,17 +75,19 @@
 
 <script>
 /* eslint-disable */
+  import {
+    mapState,
+  } from 'vuex'
   export default {
     name: 'TellusAbout',
 
     data () {
       return {
-        loading: false,
         valid: true,
-        form: {
-          firstName: '',
-          lastName: '',
-          phoneNumber: '',
+        formData: {
+          first_name: '',
+          last_name: '',
+          phone: '',
           email: '',
           dob: '',
         },
@@ -102,14 +104,25 @@
     },
 
     computed: {
+      ...mapState(['loading', 'error', 'quote', 'name'])
+    },
+
+    mounted () {
+      if (this.name) {
+        this.formData.firstName = this.name.split(' ')[0]
+        this.formData.lastName = this.name.split(' ')[1]
+      }
     },
 
     methods: {
       async saveAndGetQuote () {
         this.$refs.form.validate()
-          if (!this.valid) {
-            return
-          }
+        if (!this.valid) {
+          return
+        }
+
+        console.log(this.formData)
+        this.$store.commit('CREATE_QUOTE', this.formData)
       }
     },
   }

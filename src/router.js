@@ -35,23 +35,23 @@ export default new Router({
     },
     {
       path: '/',
-      component: () => import('@/views/dashboard/Index'),
+      component: () => import('@/views/quotes/Index'),
       children: [
-        // Dashboard
+        // Home
         {
-          name: 'Dashboard',
+          name: 'Home',
           path: '',
-          component: () => import('@/views/dashboard/Dashboard'),
+          component: () => import('@/views/quotes/Home'),
         },
       ],
     },
     {
       path: '/quote',
-      component: () => import('@/views/quotes/Index'),
+      component: () => import('@/views/quotes/steps/Index'),
       children: [
         {
           name: 'TellusAbout',
-          path: '',
+          path: 'tellus-about',
           component: () => import('@/views/quotes/steps/TellusAbout'),
         },
         {

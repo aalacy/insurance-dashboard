@@ -22,8 +22,8 @@
     <v-list-item two-line>
       <v-list-item-content>
         <v-list-item-title class="text-uppercase font-weight-regular display-2">
-          <span class="logo-mini">{{ $t('ct') }}</span>
-          <span class="logo-normal">{{ $t('tim') }}</span>
+          <span class="logo-mini">{{ $t('qn') }}</span>
+          <span class="logo-normal">{{ $t('Quote Ninja') }}</span>
         </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-  // Utilities
+/* eslint-disable */
   import {
     mapState,
   } from 'vuex'
@@ -90,13 +90,23 @@
       items: [
         {
           icon: 'mdi-view-dashboard',
-          title: 'dashboard',
+          title: 'Home',
           to: '/',
         },
         {
-          icon: 'mdi-view-dashboard',
-          title: 'dashboard',
-          to: '/quote',
+          group: '/quote',
+          icon: 'mdi-tag-multiple-outline',
+          title: 'Quote',
+          children: [
+            {
+              title: 'Form 2',
+              to: 'tellus-about',
+            },
+            {
+              title: 'Form 3',
+              to: 'compare-auto-insurance',
+            },
+          ]
         },
       ],
     }),

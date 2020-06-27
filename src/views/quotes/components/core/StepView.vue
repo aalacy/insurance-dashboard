@@ -29,7 +29,7 @@
     name: 'StepCoreView',
 
     components: {
-      DashboardCoreFooter: () => import('@/views/dashboard/components/core/Footer'),
+      DashboardCoreFooter: () => import('../../components/core/Footer'),
     },
   }
 </script>
