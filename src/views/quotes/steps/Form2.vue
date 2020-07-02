@@ -9,7 +9,7 @@
       v-model="valid"
     >
       <v-row>
-        <v-col>
+        <v-col cols="12" md="6">
           <base-quote-text-field
             v-model="formData.first_name"
             label="First Name"
@@ -17,7 +17,7 @@
             :rules="[rules.required, rules.min3]"
           />
         </v-col>
-        <v-col>
+        <v-col cols="12" md="6">
           <base-quote-text-field
             v-model="formData.last_name"
             label="Last Name"
@@ -27,7 +27,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col>
+        <v-col cols="12" md="6">
           <base-quote-text-field
             v-model="formData.phone"
             type="tel"
@@ -37,7 +37,7 @@
             :rules="[rules.required]"
           />
         </v-col>
-        <v-col>
+        <v-col cols="12" md="6">
           <base-quote-text-field
             v-model="formData.email"
             label="Email Address"

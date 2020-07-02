@@ -26,7 +26,7 @@
           >
           </v-select>
           <v-row justify="space-around">
-            <v-col>
+            <v-col cols="12" md="6">
               <v-text-field
                 v-model="name"
                 hide-details="auto"
@@ -36,7 +36,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col>
+            <v-col cols="12" md="6">
               <v-btn
                 large
                 block
