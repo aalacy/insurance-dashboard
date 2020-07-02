@@ -6,8 +6,9 @@
 	      ...$props,
 	    }"
 	    v-model="internalValue"
-        hide-details="auto"
-        outlined
+      hide-details="auto"
+      outlined
+      clearable
   	>
   	</v-text-field>
 </template>

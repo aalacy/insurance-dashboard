@@ -85,7 +85,7 @@
         const payload = this.quote
         payload.quotes[0].vehicles.push(this.form)
 
-        this.$store.commit('UPDATE_QUOTE', payload)
+        await this.$store.commit('UPDATE_QUOTE', payload)
 
         localStorage.setItem('shell_id', this.quote.id)
         localStorage.setItem('lastStep', 'Form3')

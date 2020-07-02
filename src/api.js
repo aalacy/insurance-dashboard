@@ -9,11 +9,6 @@ export const callQuote = async (state, payload, method="POST") => {
 		url += payload.id + '/'
 	}
 	try {
-		// const res = await fetch(url, {
-		//     method,
-		//     headers: genericHeaders(),
-		//     body: JSON.stringify(payload)
-	 //  	}).then(res => res.json())
 	 	const res = await axios({
 	 		url,
 	 		method,

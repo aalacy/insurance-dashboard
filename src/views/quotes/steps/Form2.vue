@@ -14,7 +14,7 @@
             v-model="formData.first_name"
             label="First Name"
             placeholder="John"
-            :rules="[rules.required]"
+            :rules="[rules.required, rules.min3]"
           />
         </v-col>
         <v-col>
@@ -22,7 +22,7 @@
             v-model="formData.last_name"
             label="Last Name"
             placeholder="Doe"
-            :rules="[rules.required]"
+            :rules="[rules.required, rules.min3]"
           />
         </v-col>
       </v-row>
@@ -30,9 +30,10 @@
         <v-col>
           <base-quote-text-field
             v-model="formData.phone"
-            type="number"
+            type="tel"
             label="Phone Number"
             placeholder="(555)555-5555"
+            v-mask="'(###)###-####'" 
             :rules="[rules.required]"
           />
         </v-col>
@@ -55,9 +56,12 @@
             label="Date of Birthday"
             placeholder="MM/DD/YYYY"
             :rules="[rules.required]"
+            v-mask="'##/##/####'" 
+            type="tel"
             :loading="loading"
           />
         </v-col>
+
       </v-row>
       <div class="d-flex">
         <v-spacer></v-spacer>
@@ -79,6 +83,7 @@
 
 <script>
 /* eslint-disable */
+import {mask} from 'vue-the-mask'
   import {
     mapState,
   } from 'vuex'
@@ -99,6 +104,7 @@
           required: value => {
             return !!value || 'This field is required.'
           },
+          min3: value => (value && value.length >= 3) || 'Min 3 characters',
           email: value => {
             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             return pattern.test(value) || 'Invalid e-mail.'
@@ -106,6 +112,8 @@
         }
       }
     },
+
+    directives: {mask},
 
     computed: {
       ...mapState(['loading', 'error', 'quote', 'name'])
@@ -128,7 +136,11 @@
           return
         }
 
-        this.$store.commit('CREATE_QUOTE', this.formData)
+        const payload = this.formData
+        // change dateformat from MM/DD/YYYY to YYYY-MM-DD
+        payload.dob = this.$moment(payload.dob).format('YYYY-MM-DD')
+
+        await this.$store.commit('CREATE_QUOTE', this.formData)
 
         localStorage.setItem('lastStep', 'Form2')
         localStorage.setItem('nextStep', 'Form3')
