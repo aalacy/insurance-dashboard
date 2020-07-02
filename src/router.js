@@ -120,6 +120,7 @@ const router = new Router({
 })
 
 router.beforeEach(async (to, from, next) => {
+  console.log('to', to, from)
   if(to.matched.some(record => record.meta.read)) {
     const id = localStorage.getItem('shell_id')
     const lastStep = localStorage.getItem('lastStep')
@@ -131,7 +132,7 @@ router.beforeEach(async (to, from, next) => {
       next()
     } 
 
-    if (to <= nextStep) {
+    if (to.name <= nextStep) {
       next()
     }
   } else {
