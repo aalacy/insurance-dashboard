@@ -11,6 +11,13 @@
       <v-row
         class="mx-4"
       >
+        <v-col>
+          <v-progress-linear height=20 color="blue" :value="step"></v-progress-linear>
+        </v-col>
+      </v-row>
+      <v-row
+        class="mx-4"
+      >
         <v-col  cols="12" md="6">
           <router-view />
         </v-col>
@@ -25,8 +32,22 @@
 </template>
 
 <script>
+/* eslint-disable */
+  import {
+    mapState,
+  } from 'vuex'
+
   export default {
     name: 'StepCoreView',
+
+    data () {
+      return {
+      }
+    },
+
+    computed: {
+      ...mapState(['step']),
+    },
 
     components: {
       DashboardCoreFooter: () => import('../../components/core/Footer'),

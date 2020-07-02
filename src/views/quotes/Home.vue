@@ -41,6 +41,7 @@
                 large
                 block
                 :loading="loading"
+                :disabled="loading || !valid"
                 color="success"
                 @click="getStarted"
               >
@@ -95,6 +96,12 @@
       this.$store.commit('SET_UUID', '')
     },
 
+    created() {
+      localStorage.removeItem('shell_id')
+      localStorage.removeItem('lastStep')
+      localStorage.removeItem('nextStep')
+    },
+
     methods: {
       async getStarted () {
         this.$refs.form.validate()
@@ -102,7 +109,13 @@
           return
         }
         this.$store.commit('SET_NAME', this.name)
-        this.$router.push({ name: 'TellusAbout' })
+
+        // save the laststep
+        localStorage.setItem('lastStep', 'Form1')
+        localStorage.setItem('nextStep', 'Form2')
+
+        // move to Form2
+        this.$router.push({ name: 'Form2' })
       }
     },
   }

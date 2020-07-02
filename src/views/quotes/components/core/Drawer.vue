@@ -100,11 +100,27 @@
           children: [
             {
               title: 'Form 2',
-              to: 'tellus-about',
+              to: 'form2',
             },
             {
               title: 'Form 3',
-              to: 'compare-auto-insurance',
+              to: 'form3',
+            },
+            {
+              title: 'Form 4',
+              to: 'form4',
+            },
+            {
+              title: 'Form 5',
+              to: 'form5',
+            },
+            {
+              title: 'Form 6',
+              to: 'form6',
+            },
+            {
+              title: 'Form 7',
+              to: 'form7',
             },
           ]
         },
@@ -132,15 +148,15 @@
           children: [
             {
               href: '',
-              title: this.$t('my-profile'),
+              title: this.$t('Insurance'),
             },
             {
               to: '',
-              title: this.$t('edit-profile'),
+              title: this.$t('About Us'),
             },
             {
               to: '',
-              title: this.$t('settings'),
+              title: this.$t('Contact Us'),
             },
           ],
         }

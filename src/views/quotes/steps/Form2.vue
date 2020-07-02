@@ -44,6 +44,7 @@
             placeholder="jone"
             suffix="@hosting.com"
             :rules="[rules.required]"
+            :loading="loading"
           />
         </v-col>
       </v-row>
@@ -54,6 +55,7 @@
             label="Date of Birthday"
             placeholder="MM/DD/YYYY"
             :rules="[rules.required]"
+            :loading="loading"
           />
         </v-col>
       </v-row>
@@ -64,6 +66,8 @@
           color="main"
           class="mr-0"
           @click="saveAndGetQuote"
+          :loading="loading"
+          :disabled="loading || !valid"
         >
           Save & Get Quote
         </v-btn>
@@ -109,9 +113,12 @@
 
     mounted () {
       if (this.name) {
-        this.formData.firstName = this.name.split(' ')[0]
-        this.formData.lastName = this.name.split(' ')[1]
+        this.formData.first_name = this.name.split(' ')[0]
+        this.formData.last_name = this.name.split(' ')[1]
       }
+
+      // update the progress bar
+      this.$store.commit('SET_STEP', 100/27*2)
     },
 
     methods: {
@@ -121,8 +128,12 @@
           return
         }
 
-        console.log(this.formData)
         this.$store.commit('CREATE_QUOTE', this.formData)
+
+        localStorage.setItem('lastStep', 'Form2')
+        localStorage.setItem('nextStep', 'Form3')
+
+        this.$router.push({ name: 'Form3' })
       }
     },
   }

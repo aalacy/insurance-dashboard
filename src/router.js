@@ -1,9 +1,12 @@
+/* eslint-disable */
+
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './store'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -42,6 +45,9 @@ export default new Router({
           name: 'Home',
           path: '',
           component: () => import('@/views/quotes/Home'),
+          meta: {
+            read: false
+          }
         },
       ],
     },
@@ -50,14 +56,52 @@ export default new Router({
       component: () => import('@/views/quotes/steps/Index'),
       children: [
         {
-          name: 'TellusAbout',
-          path: 'tellus-about',
-          component: () => import('@/views/quotes/steps/TellusAbout'),
+          name: 'Form2',
+          path: 'form2',
+          component: () => import('@/views/quotes/steps/Form2'),
+          meta: {
+            read: false
+          }
         },
         {
-          name: 'CompareAutoInsurance',
-          path: 'compare-auto-insurance',
-          component: () => import('@/views/quotes/steps/CompareAutoInsurance'),
+          name: 'Form3',
+          path: 'form3',
+          component: () => import('@/views/quotes/steps/Form3'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form4',
+          path: 'form4',
+          component: () => import('@/views/quotes/steps/Form4'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form5',
+          path: 'form5',
+          component: () => import('@/views/quotes/steps/Form5'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form6',
+          path: 'form6',
+          component: () => import('@/views/quotes/steps/Form6'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form7',
+          path: 'form7',
+          component: () => import('@/views/quotes/steps/Form7'),
+          meta: {
+            read: true
+          }
         },
       ],
     },
@@ -74,3 +118,26 @@ export default new Router({
     },
   ],
 })
+
+router.beforeEach(async (to, from, next) => {
+  if(to.matched.some(record => record.meta.read)) {
+    const id = localStorage.getItem('shell_id')
+    const lastStep = localStorage.getItem('lastStep')
+    const nextStep = localStorage.getItem('nextStep')
+    if (id) {
+      if (store.state.quote.id == undefined && to > 'Form2') {
+        store.commit('GET_QUOTE', {id})
+      }
+      next()
+    } 
+
+    if (to <= nextStep) {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
+
+export default router

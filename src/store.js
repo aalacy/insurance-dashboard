@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { createQuote } from './api'
+import { createQuote, updateQuote, getQuote } from './api'
 
 Vue.use(Vuex)
 
@@ -16,7 +16,8 @@ export default new Vuex.Store({
     error: null,
     quote: {},
     name: '',
-    uuid: localStorage.getItem('uuid') || ''
+    uuid: localStorage.getItem('uuid') || '',
+    step: 0
   },
   mutations: {
     SET_BAR_IMAGE (state, payload) {
@@ -37,9 +38,15 @@ export default new Vuex.Store({
     async CREATE_QUOTE(state, payload) {
       await createQuote(state, payload)
     },
-    // async GET_QUOTE(state, payload) {
-    //   await getQuote(state, payload)
-    // }
+    async UPDATE_QUOTE(state, payload) {
+      await updateQuote(state, payload)
+    },
+    async GET_QUOTE(state, payload) {
+      await getQuote(state, payload)
+    },
+    SET_STEP (state, payload) {
+      state.step = payload
+    }
   },
   actions: {
 

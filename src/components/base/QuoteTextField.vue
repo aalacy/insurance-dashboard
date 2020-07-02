@@ -5,10 +5,9 @@
 	      ...$attrs,
 	      ...$props,
 	    }"
-	    v-model="content"
+	    v-model="internalValue"
         hide-details="auto"
         outlined
-        @input="updateData"
   	>
   	</v-text-field>
 </template>
@@ -20,16 +19,15 @@ export default {
 
 	props: ['value'],
 
-	data () {
-	    return {
-	      content: this.value
-	    }
-  	},
-
-	methods: {
-		updateData() {
-			this.$emit('input', this.content)
-		}
-	}
+	computed: {
+      internalValue: {
+        get () {
+          return this.value
+        },
+        set (val) {
+          this.$emit('input', val)
+        },
+      },
+    },
 }
 </script>
