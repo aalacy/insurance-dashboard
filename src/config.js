@@ -1,6 +1,7 @@
 /* eslint-disable */
-// const api = "https://hearbk-server-api.herokuapp.com";
-const api = "http://localhost:8000/api/quoteshell/";
+require('dotenv').config()
+
+const api = process.env.VUE_APP_BACKEND_URL;
 // const api = "https://api-ninja.herokuapp.com/api/quoteshell/";
 export const genericHeaders = () => ({
   "Content-Type": "application/json",

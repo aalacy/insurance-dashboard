@@ -3,6 +3,7 @@ import axios from 'axios'
 import api, { genericHeaders, emailSuffix } from './config'
 import { changeDOBfromVueToAPI } from './util'
 
+
 export const callQuote = async (state, payload, url='', method="POST") => {
 	state.loading = true
 	let res
