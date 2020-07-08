@@ -1,9 +1,9 @@
 <!-- eslint-disable -->
 <template>
   <div
-    id="Form7"
+    id="Form24"
   >
-    <div class="mb-4 display-2">How many miles do you drive per year in your {{vehicle.make}} {{vehicle.model}}?</div>
+    <div class="mb-4 display-2">What liability limits are you interested in?</div>
     <v-form
       ref="form"
       v-model="valid"
@@ -11,9 +11,9 @@
       <v-row>
         <v-col>
           <v-select
-            v-model="form.year_miles"
+            v-model="form.limit"
             outlined
-            :items="yearMiles"
+            :items="limits"
             :rules="[rules.required]"
             :loading="loading"
           >
@@ -43,31 +43,34 @@
     mapState,
   } from 'vuex'
   export default {
-    name: 'Form7',
+    name: 'Form24',
 
     data () {
       return {
         valid: true,
-        done: false,
         form: {
-          year_miles: ''
+          limit: ''
         },
-        yearMiles: [
+        limits: [
           {
-            text: '5,000',
-            value: '5000'
+            text: '$15,000/$30,000/$10,000 (Minimum)',
+            value: 'Minimum'
           },
           {
-            text: '12,000',
-            value: '12000'
+            text: '$25,000/$50,000/$25,000 (Good)',
+            value: 'Good'
           },
           {
-            text: '15,000',
-            value: '15000'
+            text: '$50,000/$100,000/$25,000 (Better)',
+            value: 'Better'
           },
           {
-            text: '25,000+',
-            value: '25000'
+            text: '$100,000/$300,000/$50,000 (Best)',
+            value: 'Best'
+          },
+          {
+            text: '$100,000/$300,000/$50,000 (Superior)',
+            value: 'Superior'
           },
         ],
         rules: {
@@ -79,22 +82,19 @@
     },
 
     computed: {
-      ...mapState(['loading', 'error', 'vehicle']),
+      ...mapState(['loading', 'error', 'quote']),
     },
 
     mounted() {
-      this.$store.commit('SET_STEP', 100/27*7)
-
-      this.$store.commit('GET_VEHICLE')
+      // update the progress bar
+      this.$store.commit('SET_STEP', 100/27*24)
     },
 
     watch: {
-      vehicle: {
+      vehiquotecle: {
         deep: true,
         handler () {
-          if (this.done) {
-            this.$router.push({ name: 'Form8' })
-          }
+          this.$router.push({ name: 'Form25' })
         }
       }
     },
@@ -109,12 +109,11 @@
           return
         }
 
-        this.done = true
-        await this.$store.commit('UPDATE_VEHICLE', this.form)
+        await this.$store.commit('UPDATE_QUOTE', this.form)
 
         // Save the current state
-        localStorage.setItem('lastStep', 'Form7')
-        localStorage.setItem('nextStep', 'Form8')
+        localStorage.setItem('lastStep', 'Form24')
+        localStorage.setItem('nextStep', 'Form25')
       }
     },
   }

@@ -63,10 +63,19 @@
     },
 
     computed: {
-      ...mapState(['loading', 'error', 'quote']),
+      ...mapState(['loading', 'error', 'vehicle']),
 
       modelYears () {
         return getModelYears()
+      }
+    },
+
+    watch: {
+      vehicle: {
+        deep: true,
+        handler () {
+          this.$router.push({ name: 'Form4' })
+        }
       }
     },
 
@@ -82,16 +91,10 @@
           return
         }
 
-        const payload = this.quote
-        payload.quotes[0].vehicles.push(this.form)
+        await this.$store.commit('CREATE_VEHICLE', this.form)
 
-        await this.$store.commit('UPDATE_QUOTE', payload)
-
-        localStorage.setItem('shell_id', this.quote.id)
         localStorage.setItem('lastStep', 'Form3')
         localStorage.setItem('nextStep', 'Form4')
-
-        this.$router.push({ name: 'Form4' })
       }
     },
   }

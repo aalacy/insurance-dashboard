@@ -7,7 +7,6 @@
     <v-form
       ref="form"
       v-model="valid"
-      lazy-validation
     >
       <v-row>
         <v-col>
@@ -78,7 +77,7 @@
     },
 
     computed: {
-      ...mapState(['loading', 'error', 'quote']),
+      ...mapState(['loading', 'error', 'vehicle']),
 
       carMakes () {
         return getCarMakes()
@@ -88,10 +87,16 @@
       }
     },
 
-    mounted() {
-      // get the latest form data from state
-      this.form = this.quote.quotes[0].vehicles[0]
+    watch: {
+      vehicle: {
+        deep: true,
+        handler () {
+          this.$router.push({ name: 'Form5' })
+        }
+      }
+    },
 
+    mounted() {
       // update the progress bar
       this.$store.commit('SET_STEP', 100/27*4)
     },
@@ -106,18 +111,11 @@
           return
         }
 
-        const payload = this.quote
-        payload.quotes[0].vehicles[0] = this.form
-
-        await this.$store.commit('UPDATE_QUOTE', payload)
+        await this.$store.commit('UPDATE_VEHICLE', this.form)
 
         // Save the current state
-        localStorage.setItem('shell_id', this.quote.id)
         localStorage.setItem('lastStep', 'Form4')
         localStorage.setItem('nextStep', 'Form5')
-
-        // go to Form 5
-        this.$router.push({ name: 'Form5' })
       }
     },
   }

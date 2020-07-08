@@ -1,25 +1,17 @@
 <!-- eslint-disable -->
 <template>
   <div
-    id="Form7"
+    id="Form14"
   >
-    <div class="mb-4 display-2">How many miles do you drive per year in your {{vehicle.make}} {{vehicle.model}}?</div>
+    <div class="mb-4 display-2">What is your driver's license status?</div>
     <v-form
       ref="form"
       v-model="valid"
     >
-      <v-row>
-        <v-col>
-          <v-select
-            v-model="form.year_miles"
-            outlined
-            :items="yearMiles"
-            :rules="[rules.required]"
-            :loading="loading"
-          >
-          </v-select>
-        </v-col>
-      </v-row>
+      <base-card-group
+        v-model="selected"
+        :items="license_status_types"
+      />
       <div class="d-flex mt-3">
         <v-spacer></v-spacer>
         <v-btn
@@ -47,27 +39,36 @@
 
     data () {
       return {
+        selected: [],
         valid: true,
-        done: false,
         form: {
-          year_miles: ''
+          license_status: ''
         },
-        yearMiles: [
+        license_status_types: [
           {
-            text: '5,000',
-            value: '5000'
+            text: 'Active',
+            value: 'Active',
+            icon: 'mdi-image-area'
           },
           {
-            text: '12,000',
-            value: '12000'
+            text: 'Permit',
+            value: 'Permit',
+            icon: 'mdi-clipboard-file'
           },
           {
-            text: '15,000',
-            value: '15000'
+            text: 'Expired',
+            value: 'Expired',
+            icon: 'mdi-timer'
           },
           {
-            text: '25,000+',
-            value: '25000'
+            text: 'Suspened',
+            value: 'Suspened',
+            icon: 'mdi-account-alert'
+          },
+          {
+            text: 'Foreign',
+            value: 'Foreign',
+            icon: 'mdi-image-area'
           },
         ],
         rules: {
@@ -79,42 +80,35 @@
     },
 
     computed: {
-      ...mapState(['loading', 'error', 'vehicle']),
+      ...mapState(['loading', 'error', 'driver']),
     },
 
     mounted() {
-      this.$store.commit('SET_STEP', 100/27*7)
-
-      this.$store.commit('GET_VEHICLE')
+      this.$store.commit('SET_STEP', 100/27*14)
     },
 
     watch: {
-      vehicle: {
+      driver: {
         deep: true,
         handler () {
-          if (this.done) {
-            this.$router.push({ name: 'Form8' })
-          }
+          this.$router.push({ name: 'Form15' })
         }
       }
     },
 
     methods: {
-      changeMake () {
-        this.form.model = ''
-      },
       async saveAndGetQuote () {
         this.$refs.form.validate()
         if (!this.valid) {
           return
         }
 
-        this.done = true
-        await this.$store.commit('UPDATE_VEHICLE', this.form)
+        this.form.license_status = this.license_status_types[this.selected].value
+        await this.$store.commit('UPDATE_DRIVER', this.form)
 
         // Save the current state
-        localStorage.setItem('lastStep', 'Form7')
-        localStorage.setItem('nextStep', 'Form8')
+        localStorage.setItem('lastStep', 'Form14')
+        localStorage.setItem('nextStep', 'Form15')
       }
     },
   }

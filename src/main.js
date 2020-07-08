@@ -26,7 +26,8 @@ import VuetifyDialog from 'vuetify-dialog'
 import 'vuetify-dialog/dist/vuetify-dialog.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
- 
+import { VTextField } from 'vuetify/lib'
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.config.productionTip = false
 
@@ -48,3 +49,10 @@ Vue.use(VuetifyDialog, {
 Vue.use(VueAxios, axios)
 
 Vue.use(require('vue-moment'));
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyCO7YUlqIF03aHwa3gBLRDSkICLcjRMWRU',
+    libraries: 'places', // This is required if you use the Autocomplete plugin
+  },
+})

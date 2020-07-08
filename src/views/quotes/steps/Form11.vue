@@ -1,25 +1,17 @@
 <!-- eslint-disable -->
 <template>
   <div
-    id="Form7"
+    id="Form11"
   >
-    <div class="mb-4 display-2">How many miles do you drive per year in your {{vehicle.make}} {{vehicle.model}}?</div>
+    <div class="mb-4 display-2">What is your martial status?</div>
     <v-form
       ref="form"
       v-model="valid"
     >
-      <v-row>
-        <v-col>
-          <v-select
-            v-model="form.year_miles"
-            outlined
-            :items="yearMiles"
-            :rules="[rules.required]"
-            :loading="loading"
-          >
-          </v-select>
-        </v-col>
-      </v-row>
+      <base-card-group
+        v-model="selected"
+        :items="martials"
+      />
       <div class="d-flex mt-3">
         <v-spacer></v-spacer>
         <v-btn
@@ -47,27 +39,36 @@
 
     data () {
       return {
+        selected: [],
         valid: true,
-        done: false,
         form: {
-          year_miles: ''
+          martial: ''
         },
-        yearMiles: [
+        martials: [
           {
-            text: '5,000',
-            value: '5000'
+            text: 'Married',
+            value: 'Married',
+            icon: 'mdi-human-male-female'
           },
           {
-            text: '12,000',
-            value: '12000'
+            text: 'Single',
+            value: 'Single',
+            icon: 'mdi-human-male-female'
           },
           {
-            text: '15,000',
-            value: '15000'
+            text: 'Widowed',
+            value: 'Widowed',
+            icon: 'mdi-human-male-female'
           },
           {
-            text: '25,000+',
-            value: '25000'
+            text: 'Divorced',
+            value: 'Divorced',
+            icon: 'mdi-human-male-female'
+          },
+          {
+            text: 'Domestic Partnership',
+            value: 'Domestic Partnership',
+            icon: 'mdi-human-male-female'
           },
         ],
         rules: {
@@ -79,22 +80,18 @@
     },
 
     computed: {
-      ...mapState(['loading', 'error', 'vehicle']),
+      ...mapState(['loading', 'error', 'driver']),
     },
 
     mounted() {
-      this.$store.commit('SET_STEP', 100/27*7)
-
-      this.$store.commit('GET_VEHICLE')
+      this.$store.commit('SET_STEP', 100/27*11)
     },
 
     watch: {
-      vehicle: {
+      driver: {
         deep: true,
         handler () {
-          if (this.done) {
-            this.$router.push({ name: 'Form8' })
-          }
+          this.$router.push({ name: 'Form12' })
         }
       }
     },
@@ -109,12 +106,12 @@
           return
         }
 
-        this.done = true
-        await this.$store.commit('UPDATE_VEHICLE', this.form)
+        this.form.martial = this.martials[this.selected].value
+        await this.$store.commit('UPDATE_DRIVER', this.form)
 
         // Save the current state
-        localStorage.setItem('lastStep', 'Form7')
-        localStorage.setItem('nextStep', 'Form8')
+        localStorage.setItem('lastStep', 'Form11')
+        localStorage.setItem('nextStep', 'Form12')
       }
     },
   }

@@ -1,25 +1,17 @@
 <!-- eslint-disable -->
 <template>
   <div
-    id="Form7"
+    id="Form21"
   >
-    <div class="mb-4 display-2">How many miles do you drive per year in your {{vehicle.make}} {{vehicle.model}}?</div>
+    <div class="mb-4 display-2">What type of residence is your home?</div>
     <v-form
       ref="form"
       v-model="valid"
     >
-      <v-row>
-        <v-col>
-          <v-select
-            v-model="form.year_miles"
-            outlined
-            :items="yearMiles"
-            :rules="[rules.required]"
-            :loading="loading"
-          >
-          </v-select>
-        </v-col>
-      </v-row>
+      <base-card-group
+        v-model="selected"
+        :items="residenceTypes"
+      />
       <div class="d-flex mt-3">
         <v-spacer></v-spacer>
         <v-btn
@@ -43,31 +35,35 @@
     mapState,
   } from 'vuex'
   export default {
-    name: 'Form7',
+    name: 'Form16',
 
     data () {
       return {
+        selected: [],
         valid: true,
-        done: false,
         form: {
-          year_miles: ''
+          residence_type: ''
         },
-        yearMiles: [
+        residenceTypes: [
           {
-            text: '5,000',
-            value: '5000'
+            text: 'Single Family Home',
+            value: 'Single Family Home',
+            icon: 'mdi-home'
           },
           {
-            text: '12,000',
-            value: '12000'
+            text: 'Condominuim',
+            value: 'Condominuim',
+            icon: 'mdi-home-city'
           },
           {
-            text: '15,000',
-            value: '15000'
+            text: 'Mobile Home',
+            value: 'Mobile Home',
+            icon: 'mdi-home'
           },
           {
-            text: '25,000+',
-            value: '25000'
+            text: 'Apartment',
+            value: 'Apartment',
+            icon: 'mdi-home'
           },
         ],
         rules: {
@@ -79,42 +75,35 @@
     },
 
     computed: {
-      ...mapState(['loading', 'error', 'vehicle']),
+      ...mapState(['loading', 'error', 'address']),
     },
 
     mounted() {
-      this.$store.commit('SET_STEP', 100/27*7)
-
-      this.$store.commit('GET_VEHICLE')
+      this.$store.commit('SET_STEP', 100/27*21)
     },
 
     watch: {
-      vehicle: {
+      address: {
         deep: true,
         handler () {
-          if (this.done) {
-            this.$router.push({ name: 'Form8' })
-          }
+          this.$router.push({ name: 'Form22' })
         }
       }
     },
 
     methods: {
-      changeMake () {
-        this.form.model = ''
-      },
       async saveAndGetQuote () {
         this.$refs.form.validate()
         if (!this.valid) {
           return
         }
 
-        this.done = true
-        await this.$store.commit('UPDATE_VEHICLE', this.form)
+        this.form.residence_type = this.residenceTypes[this.selected].value
+        await this.$store.commit('UPDATE_ADDRESS', this.form)
 
         // Save the current state
-        localStorage.setItem('lastStep', 'Form7')
-        localStorage.setItem('nextStep', 'Form8')
+        localStorage.setItem('lastStep', 'Form21')
+        localStorage.setItem('nextStep', 'Form22')
       }
     },
   }

@@ -82,7 +82,8 @@
             return !!value || 'This field is required.'
           },
           name: value => {
-            return value.split(' ').length >= 2 || 'Invalid name.'
+            const _names = value.split(' ')
+            return _names.length >= 2 || 'Invalid name.'
           },
         }
       }
@@ -98,6 +99,10 @@
 
     created() {
       localStorage.removeItem('shell_id')
+      localStorage.removeItem('quote_id')
+      localStorage.removeItem('driver_id')
+      localStorage.removeItem('vehicle_id')
+      localStorage.removeItem('address_id')
       localStorage.removeItem('lastStep')
       localStorage.removeItem('nextStep')
     },

@@ -14,7 +14,7 @@
             v-model="formData.first_name"
             label="First Name"
             placeholder="John"
-            :rules="[rules.required, rules.min3]"
+            :rules="[rules.required]"
           />
         </v-col>
         <v-col cols="12" md="6">
@@ -22,7 +22,7 @@
             v-model="formData.last_name"
             label="Last Name"
             placeholder="Doe"
-            :rules="[rules.required, rules.min3]"
+            :rules="[rules.required]"
           />
         </v-col>
       </v-row>
@@ -44,7 +44,7 @@
             type="email"
             placeholder="jone"
             suffix="@hosting.com"
-            :rules="[rules.required]"
+            :rules="[rules.required, rules.email]"
             :loading="loading"
           />
         </v-col>
@@ -107,7 +107,7 @@ import {mask} from 'vue-the-mask'
           min3: value => (value && value.length >= 3) || 'Min 3 characters',
           email: value => {
             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            return pattern.test(value) || 'Invalid e-mail.'
+            return pattern.test(value+'@hosting.com') || 'Invalid e-mail.'
           },
         }
       }
@@ -116,7 +116,16 @@ import {mask} from 'vue-the-mask'
     directives: {mask},
 
     computed: {
-      ...mapState(['loading', 'error', 'quote', 'name'])
+      ...mapState(['loading', 'error', 'quote_shell', 'quote', 'name'])
+    },
+
+    watch: {
+      quote: {
+        deep: true,
+        handler () {
+          this.$router.push({ name: 'Form3' })
+        }
+      }
     },
 
     mounted () {
@@ -136,16 +145,10 @@ import {mask} from 'vue-the-mask'
           return
         }
 
-        const payload = this.formData
-        // change dateformat from MM/DD/YYYY to YYYY-MM-DD
-        payload.dob = this.$moment(payload.dob).format('YYYY-MM-DD')
-
-        await this.$store.commit('CREATE_QUOTE', this.formData)
+        await this.$store.commit('CREATE_DRIVER', this.formData)
 
         localStorage.setItem('lastStep', 'Form2')
         localStorage.setItem('nextStep', 'Form3')
-
-        this.$router.push({ name: 'Form3' })
       }
     },
   }

@@ -122,6 +122,87 @@
               title: 'Form 7',
               to: 'form7',
             },
+            {
+              title: 'Form 8',
+              to: 'form8',
+            },
+            {
+              title: 'Form 9',
+              to: 'form9',
+            },
+            {
+              title: 'Form 10',
+              to: 'form10',
+            },
+            {
+              title: 'Form 11',
+              to: 'form11',
+            },
+            {
+              title: 'Form 12',
+              to: 'form12',
+            },
+            {
+              title: 'Form 13',
+              to: 'form13',
+            },
+            {
+              title: 'Form 14',
+              to: 'form14',
+            },
+            {
+              title: 'Form 15',
+              to: 'form15',
+            },
+            {
+              title: 'Form 16',
+              to: 'form16',
+            },
+            {
+              title: 'Form 17',
+              to: 'form17',
+            },
+            {
+              title: 'Form 18',
+              to: 'form18',
+            },
+            {
+              title: 'Form 19',
+              to: 'form19',
+            },
+            {
+              title: 'Form 20',
+              to: 'form20',
+            },
+            {
+              title: 'Form 21',
+              to: 'form21',
+            },
+            {
+              title: 'Form 22',
+              to: 'form22',
+            },
+            {
+              title: 'Form 23',
+              to: 'form23',
+            },
+            {
+              title: 'Form 24',
+              to: 'form24',
+            },
+            {
+              title: 'Form 25',
+              to: 'form25',
+            },
+            {
+              title: 'Form 26',
+              to: 'form26',
+            },
+            {
+              title: 'Form 27',
+              to: 'form27',
+            },
+
           ]
         },
       ],

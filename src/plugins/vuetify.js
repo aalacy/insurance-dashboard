@@ -6,11 +6,11 @@ import '@/sass/overrides.sass'
 Vue.use(Vuetify)
 
 const theme = {
-  primary: '#E91E63',
+  primary: '#2196F3',
   secondary: '#9C27b0',
   accent: '#9C27b0',
   info: '#00CAE3',
-  main: '#E91E63',
+  main: '#2196F3',
 }
 
 export default new Vuetify({

@@ -36,3 +36,7 @@ export const getCarMakes = () => {
 export const getCarModels = (make) => {
 	return carMakesAndModels[make]
 }
+
+export const changeDOBfromVueToAPI = (date) => {
+	return moment(date).format('YYYY-MM-DD')
+}

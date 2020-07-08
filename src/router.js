@@ -103,6 +103,158 @@ const router = new Router({
             read: true
           }
         },
+        {
+          name: 'Form8',
+          path: 'form8',
+          component: () => import('@/views/quotes/steps/Form8'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form9',
+          path: 'form9',
+          component: () => import('@/views/quotes/steps/Form9'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form10',
+          path: 'form10',
+          component: () => import('@/views/quotes/steps/Form10'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form11',
+          path: 'form11',
+          component: () => import('@/views/quotes/steps/Form11'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form12',
+          path: 'form12',
+          component: () => import('@/views/quotes/steps/Form12'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form13',
+          path: 'form13',
+          component: () => import('@/views/quotes/steps/Form13'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form14',
+          path: 'form14',
+          component: () => import('@/views/quotes/steps/Form14'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form15',
+          path: 'form15',
+          component: () => import('@/views/quotes/steps/Form15'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form16',
+          path: 'form16',
+          component: () => import('@/views/quotes/steps/Form16'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form17',
+          path: 'form17',
+          component: () => import('@/views/quotes/steps/Form17'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form18',
+          path: 'form18',
+          component: () => import('@/views/quotes/steps/Form18'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form19',
+          path: 'form19',
+          component: () => import('@/views/quotes/steps/Form19'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form20',
+          path: 'form20',
+          component: () => import('@/views/quotes/steps/Form20'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form21',
+          path: 'form21',
+          component: () => import('@/views/quotes/steps/Form21'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form22',
+          path: 'form22',
+          component: () => import('@/views/quotes/steps/Form22'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form23',
+          path: 'form23',
+          component: () => import('@/views/quotes/steps/Form23'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form24',
+          path: 'form24',
+          component: () => import('@/views/quotes/steps/Form24'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form25',
+          path: 'form25',
+          component: () => import('@/views/quotes/steps/Form25'),
+          meta: {
+            read: true
+          }
+        },
+        {
+          name: 'Form26',
+          path: 'form26',
+          component: () => import('@/views/quotes/steps/Form26'),
+          meta: {
+            read: true
+          }
+        },
       ],
     },
     {
@@ -120,21 +272,20 @@ const router = new Router({
 })
 
 router.beforeEach(async (to, from, next) => {
-  console.log('to', to, from)
   if(to.matched.some(record => record.meta.read)) {
     const id = localStorage.getItem('shell_id')
     const lastStep = localStorage.getItem('lastStep')
     const nextStep = localStorage.getItem('nextStep')
     if (id) {
-      if (store.state.quote.id == undefined && to > 'Form2') {
-        store.commit('GET_QUOTE', {id})
-      }
+      // if (store.state.quote_shell == {} && to > 'Form2') {
+      //   store.commit('GET_QUOTE_SHELL', {id})
+      // }
       next()
     } 
 
-    if (to.name <= nextStep) {
+    // if (to.name <= nextStep) {
       next()
-    }
+    // }
   } else {
     next()
   }

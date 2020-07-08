@@ -1,25 +1,17 @@
 <!-- eslint-disable -->
 <template>
   <div
-    id="Form7"
+    id="Form10"
   >
-    <div class="mb-4 display-2">How many miles do you drive per year in your {{vehicle.make}} {{vehicle.model}}?</div>
+    <div class="mb-4 display-2">What is your gender?</div>
     <v-form
       ref="form"
       v-model="valid"
     >
-      <v-row>
-        <v-col>
-          <v-select
-            v-model="form.year_miles"
-            outlined
-            :items="yearMiles"
-            :rules="[rules.required]"
-            :loading="loading"
-          >
-          </v-select>
-        </v-col>
-      </v-row>
+      <base-card-group
+        v-model="selected"
+        :items="genders"
+      />
       <div class="d-flex mt-3">
         <v-spacer></v-spacer>
         <v-btn
@@ -47,27 +39,26 @@
 
     data () {
       return {
+        selected: [],
         valid: true,
-        done: false,
         form: {
-          year_miles: ''
+          gender: ''
         },
-        yearMiles: [
+        genders: [
           {
-            text: '5,000',
-            value: '5000'
+            text: 'Male',
+            value: 'Male',
+            icon: 'mdi-human-male'
           },
           {
-            text: '12,000',
-            value: '12000'
+            text: 'Female',
+            value: 'Female',
+            icon: 'mdi-human-female'
           },
           {
-            text: '15,000',
-            value: '15000'
-          },
-          {
-            text: '25,000+',
-            value: '25000'
+            text: 'Nonbinary',
+            value: 'Nonbinary',
+            icon: 'mdi-human-male-female'
           },
         ],
         rules: {
@@ -79,22 +70,18 @@
     },
 
     computed: {
-      ...mapState(['loading', 'error', 'vehicle']),
+      ...mapState(['loading', 'error', 'driver']),
     },
 
     mounted() {
-      this.$store.commit('SET_STEP', 100/27*7)
-
-      this.$store.commit('GET_VEHICLE')
+      this.$store.commit('SET_STEP', 100/27*10)
     },
 
     watch: {
-      vehicle: {
+      driver: {
         deep: true,
         handler () {
-          if (this.done) {
-            this.$router.push({ name: 'Form8' })
-          }
+          this.$router.push({ name: 'Form11' })
         }
       }
     },
@@ -109,12 +96,12 @@
           return
         }
 
-        this.done = true
-        await this.$store.commit('UPDATE_VEHICLE', this.form)
+        this.form.gender = this.genders[this.selected].value
+        await this.$store.commit('UPDATE_DRIVER', this.form)
 
         // Save the current state
-        localStorage.setItem('lastStep', 'Form7')
-        localStorage.setItem('nextStep', 'Form8')
+        localStorage.setItem('lastStep', 'Form10')
+        localStorage.setItem('nextStep', 'Form11')
       }
     },
   }

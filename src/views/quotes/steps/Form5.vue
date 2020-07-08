@@ -3,32 +3,23 @@
   <div
     id="Form5"
   >
-    <div class="mb-4 display-2">I primarily use my {{form.make}} {{form.model}} for:</div>
+    <div class="mb-4 display-2">I primarily use my {{vehicle.make}} {{vehicle.model}} for:</div>
     <v-form
       ref="form"
       v-model="valid"
-      lazy-validation
     >
-      <v-btn-toggle
-          v-model="form.use_type"
-          :rules="[rules.required]"
-          background-color="white"
-          active-class="success"
-          class="d-flex flex-wrap justify-space-between v-window"
-          dark
-          mandatory
-        >
-          <v-btn class="mb-2" :value="item.value" v-for="item in vechicleUses">
-            {{item.text}}
-          </v-btn>
+      <base-card-group
+        v-model="selected"
+        :items="vechicleUses"
+        height="150"
+        :errorMessage="errorMessage"
+      />
 
-          
-        </v-btn-toggle>
       <div class="d-flex mt-3">
         <v-spacer></v-spacer>
         <v-btn
           large
-          color="main"
+          color="blue"
           class="mr-0"
           :disabled="loading || !valid"
           :loading="loading"
@@ -46,89 +37,100 @@
   import {
     mapState,
   } from 'vuex'
-  import { getCarMakes, getCarModels } from '../../../util'
   export default {
     name: 'CompareAutoInsurance',
 
     data () {
       return {
+        selected: [],
         valid: true,
         form: {
-          year: '',
-          make: '',
-          model: '',
           use_type: ''
         },
-        text: '',
-        toggle_exclusive: 2,
-        toggle_multiple: [],
+        done: false,
+        errorMessage: '',
         vechicleUses: [
           {
             text: 'Commute',
-            value: 'Commute'
+            value: 'Commute',
+            icon: 'mdi-car'
           },
           {
             text: 'Pleasure',
-            value: 'Pleasure'
+            value: 'Pleasure',
+            icon: 'mdi-image-area'
           },
           {
             text: 'Business',
-            value: 'Business'
+            value: 'Business',
+            icon: 'mdi-bag-personal'
           },
           {
             text: 'Uber/Lyft',
-            value: 'Uber/Lyft'
+            value: 'Uber/Lyft',
+            icon: 'mdi-account-group'
           }
         ],
         rules: {
           required: value => {
-            return !!value || 'This field is required.'
+            return this.selected.length > 0 || 'This field is required.'
           },
         }
       }
     },
 
     computed: {
-      ...mapState(['loading', 'error', 'quote']),
-
-      carMakes () {
-        return getCarMakes()
-      }, 
-      carModels () {
-        return getCarModels(this.form.make)
-      }
+      ...mapState(['loading', 'error', 'vehicle']),
     },
 
     mounted() {
-      // get the latest form data from state
-      this.form = this.quote.quotes[0].vehicles[0]
-      
       // update the progress bar
       this.$store.commit('SET_STEP', 100/27*5)
+
+      this.$store.commit('GET_VEHICLE')
+    },
+
+    watch: {
+      vehicle: {
+        deep: true,
+        handler () {
+          if (this.done) {
+            this.$router.push({ name: 'Form6' })
+          }
+        }
+      },
+      selected () {
+        this.validate()
+      }
     },
 
     methods: {
       changeMake () {
         this.form.model = ''
       },
+      validate () {
+        if (this.selected && this.selected.length == 0) {
+          this.errorMessage = 'Please select an option'
+          this.valid = false
+        } else {
+          this.errorMessage = ''
+          this.valid = true
+        }
+        return this.valid
+      },
       async saveAndGetQuote () {
-        this.$refs.form.validate()
-        if (!this.valid) {
+        if (!this.validate()) {
           return
         }
 
-        const payload = this.quote
-        payload.quotes[0].vehicles[0] = this.form
+        this.done = true
+        this.form.use_type = this.vechicleUses[this.selected].value
 
-        await this.$store.commit('UPDATE_QUOTE', payload)
+        await this.$store.commit('UPDATE_VEHICLE', this.form)
 
         // Save the current state
-        localStorage.setItem('shell_id', this.quote.id)
         localStorage.setItem('lastStep', 'Form5')
         localStorage.setItem('nextStep', 'Form6')
-
-        // go to Form 6
-        this.$router.push({ name: 'Form6' })
       }
     },
   }
