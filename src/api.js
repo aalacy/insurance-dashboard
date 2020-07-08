@@ -73,7 +73,7 @@ export const createDriver = async (state, payload) => {
 
 	const shell_id = localStorage.getItem('shell_id')
 	const quote_id = localStorage.getItem('quote_id')
-	url = `${shell_id}/quotes/${quote_id}/drivers/`
+	let url = `${shell_id}/quotes/${quote_id}/drivers/`
 	const _payload = Object.assign({}, payload)
 	_payload.phone = payload.phone.replace('(', '').replace(')', '').replace('-', '')
 	_payload.email = payload.email + emailSuffix
