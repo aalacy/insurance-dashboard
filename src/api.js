@@ -95,7 +95,7 @@ export const createDriver = async (state, payload) => {
 	let url = `${shell_id}/quotes/${quote_id}/drivers/`
 	const _payload = Object.assign({}, payload)
 	_payload.phone = payload.phone.replace('(', '').replace(')', '').replace('-', '')
-	_payload.email = payload.email + emailSuffix
+	// _payload.email = payload.email + emailSuffix
 	_payload.dob = changeDOBfromVueToAPI(payload.dob)
 	const res = await callQuote(state, { ..._payload, quote: state.quote.id }, url)
 	if (res) {

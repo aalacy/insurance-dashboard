@@ -42,8 +42,7 @@
             v-model="formData.email"
             label="Email Address"
             type="email"
-            placeholder="jone"
-            suffix="@hosting.com"
+            placeholder="jone@hosting.com"
             :rules="[rules.required, rules.email]"
             :loading="loading"
           />
@@ -107,7 +106,7 @@ import {mask} from 'vue-the-mask'
           min3: value => (value && value.length >= 3) || 'Min 3 characters',
           email: value => {
             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            return pattern.test(value+'@hosting.com') || 'Invalid e-mail.'
+            return pattern.test(value) || 'Invalid e-mail.'
           },
         }
       }

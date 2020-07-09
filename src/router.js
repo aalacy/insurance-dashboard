@@ -290,13 +290,12 @@ router.beforeEach(async (to, from, next) => {
         store.commit('GET_QUOTE')
       }
       next()
+      return
     }
 
     if (to.name <= nextStep) {
       next()
-    }
-
-    if (to != from) {
+    } else if (!from.name) {
       router.push({ name: 'Home'})
     }
   } else {
