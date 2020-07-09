@@ -255,6 +255,14 @@ const router = new Router({
             read: true
           }
         },
+        {
+          name: 'Form27',
+          path: 'form27',
+          component: () => import('@/views/quotes/steps/Form27'),
+          meta: {
+            read: true
+          }
+        },
       ],
     },
     {
@@ -273,19 +281,24 @@ const router = new Router({
 
 router.beforeEach(async (to, from, next) => {
   if(to.matched.some(record => record.meta.read)) {
-    const id = localStorage.getItem('shell_id')
+    const shell_id = localStorage.getItem('shell_id')
+    const quote_id = localStorage.getItem('quote_id')
     const lastStep = localStorage.getItem('lastStep')
     const nextStep = localStorage.getItem('nextStep')
-    if (id) {
-      // if (store.state.quote_shell == {} && to > 'Form2') {
-      //   store.commit('GET_QUOTE_SHELL', {id})
-      // }
+    if (shell_id && quote_id) {
+      if (store.state.quote_shell == {} && store.state.quote == {} && to > 'Form2') {
+        store.commit('GET_QUOTE')
+      }
       next()
-    } 
+    }
 
-    // if (to.name <= nextStep) {
+    if (to.name <= nextStep) {
       next()
-    // }
+    }
+
+    if (to != from) {
+      router.push({ name: 'Home'})
+    }
   } else {
     next()
   }

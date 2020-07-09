@@ -3,6 +3,17 @@ import axios from 'axios'
 import api, { genericHeaders, emailSuffix } from './config'
 import { changeDOBfromVueToAPI } from './util'
 
+const getIP = async () => {
+	let ip = ''
+	try {
+		const res = await axios.get('https://www.cloudflare.com/cdn-cgi/trace')
+		ip = res.data.split('ip=')[1].trim().split('ts=')[0].trim()
+	} catch (e) {
+		console.log(e)
+	} 
+	return ip
+}
+
 
 export const callQuote = async (state, payload, url='', method="POST") => {
 	state.loading = true
@@ -44,7 +55,8 @@ export const getQuoteShell = async (state, payload) => {
 export const createQuote = async (state) => {
 	const shell_id = localStorage.getItem('shell_id')
 	let url = `${shell_id}/quotes/`
-	const payload = { quote_shell: shell_id }
+	const ip = await getIP()
+	const payload = { quote_shell: shell_id, ip }
 	const res = await callQuote(state, payload, url)
 	if (res) {
 		state.quote = res.data
@@ -52,14 +64,20 @@ export const createQuote = async (state) => {
 	}
 }
 
-export const updateQuote = async (state, payload, url) => {
+export const updateQuote = async (state, payload) => {
+	const shell_id = localStorage.getItem('shell_id')
+	const quote_id = localStorage.getItem('quote_id')
+	let url = `${shell_id}/quotes/${quote_id}/`
 	const res = await callQuote(state, payload, url, 'PATCH')
 	if (res) {
 		state.quote = res.data
 	}
 }
 
-export const getQuote = async (state, payload) => {
+export const getQuote = async (state) => {
+	const shell_id = localStorage.getItem('shell_id')
+	const quote_id = localStorage.getItem('quote_id')
+	let url = `${shell_id}/quotes/${quote_id}/`
 	const res = callQuote(state, payload, url, 'GET')
 	if (res) {
 		state.quote = res.data

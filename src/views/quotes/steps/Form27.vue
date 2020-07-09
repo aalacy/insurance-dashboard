@@ -1,14 +1,9 @@
 <!-- eslint-disable -->
 <template>
   <div
-    id="Form23"
+    id="Form27"
   >
-    <div class="mb-4 display-2">Have you been continously insured for the past 6 months?</div>
-    <v-form
-      ref="form"
-      v-model="valid"
-    > 
-      <base-yes-no-group v-model="selected" /> 
+    <div class="mb-0 display-2">Miike, We've selected these customized rates for you</div>
       <div class="d-flex mt-3">
         <v-spacer></v-spacer>
         <v-btn
@@ -32,14 +27,13 @@
     mapState,
   } from 'vuex'
   export default {
-    name: 'Form23',
+    name: 'Form16',
 
     data () {
       return {
-        valid: true,
         selected: [],
+        valid: true,
         form: {
-          prior_insurance: ''
         },
         rules: {
           required: value => {
@@ -54,33 +48,30 @@
     },
 
     mounted() {
-      this.$store.commit('SET_STEP', 100/27*23)
+      this.$store.commit('SET_STEP', 100/27*27)
     },
 
     watch: {
       address: {
         deep: true,
         handler () {
-          this.$router.push({ name: 'Form24' })
+          this.$router.push({ name: 'Form28' })
         }
       }
     },
 
     methods: {
       async saveAndGetQuote () {
-        console.log(this.selected)
-        return
-        
         this.$refs.form.validate()
         if (!this.valid) {
           return
         }
 
-        await this.$store.commit('UPDATE_QUOTE', this.form)
+        // await this.$store.commit('UPDATE_QUOTE', this.form)
 
         // Save the current state
-        localStorage.setItem('lastStep', 'Form23')
-        localStorage.setItem('nextStep', 'Form24')
+        localStorage.setItem('lastStep', 'Form27')
+        localStorage.setItem('nextStep', 'Form28')
       }
     },
   }

@@ -77,7 +77,9 @@
         selected: [],
         valid: true,
         form: {
-          residence_type: ''
+          professional_discount: false,
+          student_discount: false,
+          military_discount: false
         },
         discounts: [
           {
@@ -108,7 +110,7 @@
     },
 
     computed: {
-      ...mapState(['loading', 'error', 'address']),
+      ...mapState(['loading', 'error', 'quote']),
     },
 
     mounted() {
@@ -116,10 +118,10 @@
     },
 
     watch: {
-      address: {
+      quote: {
         deep: true,
         handler () {
-          this.$router.push({ name: 'Form22' })
+          this.$router.push({ name: 'Form27' })
         }
       }
     },
@@ -131,11 +133,22 @@
           return
         }
 
-        await this.$store.commit('UPDATE_ADDRESS', this.form)
+        console.log(this.selected)
+
+        this.selected.map(idx => {
+          if (idx == 0) {
+            this.form.professional_discount = true
+          } else if (idx == 1) {
+            this.form.student_discount = true
+          } else if (idx == 2) {
+            this.form.military_discount = true
+          }
+        })
+        await this.$store.commit('UPDATE_QUOTE', this.form)
 
         // Save the current state
-        localStorage.setItem('lastStep', 'Form21')
-        localStorage.setItem('nextStep', 'Form22')
+        localStorage.setItem('lastStep', 'Form26')
+        localStorage.setItem('nextStep', 'Form27')
       }
     },
   }

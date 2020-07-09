@@ -60,8 +60,8 @@ export default new Vuex.Store({
     async UPDATE_QUOTE(state, payload) {
       await updateQuote(state, payload)
     },
-    async GET_QUOTE(state, payload) {
-      await getQuote(state, payload)
+    async GET_QUOTE(state) {
+      await getQuote(state)
     },
     async CREATE_DRIVER (state, payload) {
       await createDriver(state, payload)
