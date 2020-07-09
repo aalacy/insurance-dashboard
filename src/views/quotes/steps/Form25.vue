@@ -79,7 +79,7 @@
     },
 
     watch: {
-      vehiquotecle: {
+      quote: {
         deep: true,
         handler () {
           this.$router.push({ name: 'Form26' })

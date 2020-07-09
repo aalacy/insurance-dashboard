@@ -50,7 +50,7 @@
     },
 
     computed: {
-      ...mapState(['loading', 'error', 'address']),
+      ...mapState(['loading', 'error', 'quote']),
     },
 
     mounted() {
@@ -58,7 +58,7 @@
     },
 
     watch: {
-      address: {
+      quote: {
         deep: true,
         handler () {
           this.$router.push({ name: 'Form24' })
@@ -68,14 +68,7 @@
 
     methods: {
       async saveAndGetQuote () {
-        console.log(this.selected)
-        return
-        
-        this.$refs.form.validate()
-        if (!this.valid) {
-          return
-        }
-
+        this.form.prior_insurance = this.selected == 0 ? 'Yes' : 'No'
         await this.$store.commit('UPDATE_QUOTE', this.form)
 
         // Save the current state
