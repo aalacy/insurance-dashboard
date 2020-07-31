@@ -3,14 +3,14 @@
   <div
     id="Form11"
   >
-    <div class="mb-4 display-2">What is your martial status?</div>
+    <div class="mb-4 display-2">What is your marital status?</div>
     <v-form
       ref="form"
       v-model="valid"
     >
       <base-card-group
         v-model="selected"
-        :items="martials"
+        :items="maritals"
       />
       <div class="d-flex mt-3">
         <v-spacer></v-spacer>
@@ -35,7 +35,7 @@
     mapState,
   } from 'vuex'
   export default {
-    name: 'Form7',
+    name: 'Form11',
 
     data () {
       return {
@@ -44,7 +44,7 @@
         form: {
           martial: ''
         },
-        martials: [
+        maritals: [
           {
             text: 'Married',
             value: 'Married',
@@ -97,9 +97,6 @@
     },
 
     methods: {
-      changeMake () {
-        this.form.model = ''
-      },
       async saveAndGetQuote () {
         this.$refs.form.validate()
         if (!this.valid) {
