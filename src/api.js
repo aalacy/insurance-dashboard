@@ -14,7 +14,6 @@ const getIP = async () => {
 	return ip
 }
 
-
 export const callQuote = async (state, payload, url='', method="POST") => {
 	state.loading = true
 	let res

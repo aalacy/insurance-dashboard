@@ -103,7 +103,7 @@
           return
         }
 
-        this.form.martial = this.martials[this.selected].value
+        this.form.martial = this.maritals[this.selected].value
         await this.$store.commit('UPDATE_DRIVER', this.form)
 
         // Save the current state
